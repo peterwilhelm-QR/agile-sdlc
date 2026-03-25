@@ -12,9 +12,10 @@
       font-family: 'Segoe UI', system-ui, sans-serif;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: clamp(32px, 5vh, 80px) clamp(16px, 3vw, 48px);
+      justify-content: flex-start;
+      padding: clamp(80px, 8vh, 120px) clamp(16px, 3vw, 48px);
     }
 
     .diagram {
@@ -131,11 +132,11 @@
     }
 
     .circ-sm {
-      width: clamp(62px, 7vw, 112px);
-      height: clamp(62px, 7vw, 112px);
+      width: clamp(72px, 8vw, 200px);
+      height: clamp(72px, 8vw, 200px);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: clamp(1rem, 1.8vw, 2rem);
+      font-size: clamp(1.2rem, 2.2vw, 3.2rem);
       border: 2px solid transparent;
       transition: border-color .3s, box-shadow .3s;
     }
@@ -146,8 +147,8 @@
 
     .swap { font-size: clamp(.9rem, 1.4vw, 1.8rem); color: #9ca3af; padding-bottom: clamp(6px, 1vw, 14px); }
 
-    .dev-lbl { font-size: clamp(.55rem, .65vw, .9rem); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #15803d; }
-    .qa-lbl  { font-size: clamp(.55rem, .65vw, .9rem); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #b45309; }
+    .dev-lbl { font-size: clamp(.6rem, .75vw, 1.5rem); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #15803d; }
+    .qa-lbl  { font-size: clamp(.6rem, .75vw, 1.5rem); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #b45309; }
 
     /* Story pool */
     .story-pool { display: flex; align-items: center; gap: clamp(2px, .3vw, 5px); flex-wrap: wrap; margin-top: 3px; margin-bottom: 2px; }
@@ -255,6 +256,77 @@
     .ed.up { background: #22c55e; }
     .ed.nx { background: #d1d5e8; border: 1px solid #a8afc8; }
 
+    /* ── Team callout ── */
+    .callout {
+      width: 100%;
+      max-width: 98vw;
+      margin: clamp(48px, 6vw, 96px) auto 0;
+      opacity: 0;
+      transition: opacity .3s ease;
+      pointer-events: none;
+      min-height: 260px;
+    }
+    .callout.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .callout-roles {
+      display: flex;
+      gap: clamp(12px, 1.5vw, 28px);
+      align-items: stretch;
+    }
+
+    .role-card {
+      flex: 1;
+      background: #f3f4f8;
+      border: 1px solid #dde1ee;
+      border-radius: clamp(8px, 1vw, 16px);
+      padding: clamp(14px, 1.5vw, 28px);
+    }
+
+    .role-name {
+      font-size: clamp(.65rem, .8vw, 1.1rem);
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: clamp(10px, 1vw, 18px);
+      padding-bottom: clamp(8px, .8vw, 14px);
+      border-bottom: 1px solid #dde1ee;
+    }
+
+    .role-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(6px, .7vw, 12px);
+    }
+
+    .role-items li {
+      font-size: clamp(.6rem, .72vw, 1rem);
+      color: rgba(0,0,0,.7);
+      line-height: 1.5;
+      padding-left: clamp(10px, 1vw, 16px);
+      position: relative;
+    }
+
+    .role-items li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: rgba(0,0,0,.3);
+    }
+
+    /* ── Stage header normalisation ── */
+    .stage-hd {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      min-height: clamp(140px, 16vw, 280px);
+      width: 100%;
+    }
+
     /* ── SVG overlay ── */
     .loops-svg {
       position: absolute; top: 0; left: 0;
@@ -270,9 +342,11 @@
 
     <!-- ── Planning ── -->
     <div class="stage st-plan active" id="stage-planning" onclick="activate('planning')">
-      <div class="circ">🗺</div>
-      <div class="lbl">Planning</div>
-      <div class="sub">Release</div>
+      <div class="stage-hd">
+        <div class="circ">🗺</div>
+        <div class="lbl">Planning</div>
+        <div class="sub">Release</div>
+      </div>
       <div class="card">
         <div class="feat-grid">
           <div class="sect-lbl">this release</div>
@@ -298,18 +372,20 @@
 
     <!-- ── Sprint: Dev + QA ── -->
     <div class="stage st-sprint" id="stage-sprint" onclick="activate('sprint')">
-      <div class="sprint-head">
-        <div class="sub-stage">
-          <div class="circ-sm dev-c">⚙️</div>
-          <div class="dev-lbl">Dev</div>
+      <div class="stage-hd">
+        <div class="sprint-head">
+          <div class="sub-stage">
+            <div class="circ-sm dev-c">⚙️</div>
+            <div class="dev-lbl">Dev</div>
+          </div>
+          <div class="swap">⇄</div>
+          <div class="sub-stage">
+            <div class="circ-sm qa-c">🔬</div>
+            <div class="qa-lbl">QA</div>
+          </div>
         </div>
-        <div class="swap">⇄</div>
-        <div class="sub-stage">
-          <div class="circ-sm qa-c">🔬</div>
-          <div class="qa-lbl">QA</div>
-        </div>
+        <div class="sub" style="margin-top:8px;">Sprint</div>
       </div>
-      <div class="sub" style="margin-top:8px;">Sprint</div>
       <div class="card">
         <!-- Story pool: all stories for this release, grouped by sprint -->
         <div class="sect-lbl">stories this release</div>
@@ -366,9 +442,11 @@
 
     <!-- ── UAT ── -->
     <div class="stage st-uat" id="stage-uat" onclick="activate('uat')">
-      <div class="circ">👥</div>
-      <div class="lbl">UAT</div>
-      <div class="sub">Release</div>
+      <div class="stage-hd">
+        <div class="circ">👥</div>
+        <div class="lbl">UAT</div>
+        <div class="sub">Release</div>
+      </div>
       <div class="card">
         <div class="uat-rows">
           <div class="uat-row">
@@ -399,9 +477,11 @@
 
     <!-- ── Delivery ── -->
     <div class="stage st-del" id="stage-delivery" onclick="activate('delivery')">
-      <div class="circ">🚀</div>
-      <div class="lbl">Delivery</div>
-      <div class="sub">Release</div>
+      <div class="stage-hd">
+        <div class="circ">🚀</div>
+        <div class="lbl">Delivery</div>
+        <div class="sub">Release</div>
+      </div>
       <div class="card">
         <div class="del-inner">
           <div class="ver">
@@ -422,7 +502,148 @@
   <svg class="loops-svg" id="loops-svg"></svg>
 </div>
 
+<!-- ── Team callout ── -->
+<div class="callout" id="callout">
+  <div class="callout-roles" id="callout-roles"></div>
+</div>
+
 <script>
+  const callouts = {
+    planning: {
+      color: '#4338ca',
+      roles: [
+        {
+          name: 'Product Owner',
+          items: [
+            'Define and prioritize the feature list for the release',
+            'Gather and consolidate input from SMEs into firm, final requirements for every feature selected for inclusion',
+            'Own and approve acceptance criteria for each feature',
+            'Resolve any requirements conflicts or ambiguities — no feature enters development without complete, PO-approved requirements',
+            'Formally baseline and sign off on release scope before planning closes',
+          ]
+        },
+        {
+          name: 'SME',
+          items: [
+            'Provide subject matter input on business rules, processes, and edge cases',
+            'Respond to PO queries to support requirements definition',
+            'Review requirements drafted by the PO to confirm their input has been accurately captured',
+            'Flag any gaps or misrepresentations to the PO for resolution — within the planning phase',
+          ]
+        },
+        {
+          name: 'QR',
+          items: [
+            'Facilitate the planning process and requirements workshops',
+            'Challenge and probe requirements for completeness, clarity, and testability',
+            'Translate approved requirements into user stories ready for development',
+            'Estimate effort and flag any requirements that are unclear or incomplete',
+            'Present proposed release scope and sprint structure for approval',
+            'Obtain formal PO sign-off before planning phase closes',
+          ]
+        },
+      ]
+    },
+    sprint: {
+      color: '#15803d',
+      roles: [
+        {
+          name: 'Product Owner',
+          items: [
+            'Be available to answer clarifying questions from QR during development',
+            'Review and approve completed user stories at the end of each sprint demo',
+            'Provide timely decisions on any minor ambiguities that surface during development',
+            'Acknowledge that any new or changed requirements raised during this phase will be deferred to a future release, not absorbed into the current one',
+          ]
+        },
+        {
+          name: 'SME',
+          items: [
+            'Attend sprint demos when invited to observe progress against the agreed requirements',
+            'Raise any concerns about delivered functionality to the PO, not directly to QR',
+            'Understand that requirements are closed for this release and any new input will be logged for future consideration',
+          ]
+        },
+        {
+          name: 'QR',
+          items: [
+            'Develop user stories in accordance with the approved, baselined requirements',
+            'Conduct QA testing against the agreed acceptance criteria for each story',
+            'Raise a formal query to the PO if any requirement is found to be genuinely ambiguous or incomplete during development',
+            'Deliver a sprint demo at the end of each two-week sprint to showcase completed stories and gather approval',
+            'Maintain the sprint tracker and report progress against the release plan',
+          ]
+        },
+      ]
+    },
+    uat: {
+      color: '#0e7490',
+      roles: [
+        {
+          name: 'Product Owner',
+          items: [
+            'Own and coordinate the UAT process end to end',
+            'Ensure the right stakeholders and SMEs are engaged for testing',
+            'Consolidate and triage feedback, distinguishing between genuine defects and new requirements',
+            'Make final call on whether defects are release-blocking or can be deferred',
+            'Provide formal sign-off that the release is ready for delivery',
+          ]
+        },
+        {
+          name: 'SME',
+          items: [
+            'Execute UAT test scenarios against the agreed acceptance criteria',
+            'Raise defects and observations through the agreed process, not directly to QR',
+            'Understand that new requirements or scope changes identified during UAT will be logged for a future release, not incorporated into the current one',
+            'Provide timely feedback within the UAT window to avoid delays to delivery',
+          ]
+        },
+        {
+          name: 'QR',
+          items: [
+            'Prepare and deploy the release candidate to the UAT environment',
+            'Support the PO and SMEs during UAT by answering questions and investigating reported defects',
+            'Triage and fix confirmed defects within the agreed UAT window',
+            'Distinguish clearly between defects against agreed requirements and requests for new functionality',
+            'Confirm when defects are resolved and the build is ready for PO sign-off',
+          ]
+        },
+      ]
+    },
+    delivery: {
+      color: '#9d174d',
+      roles: [
+        {
+          name: 'Product Owner',
+          items: [
+            'Provide final approval to proceed with production deployment',
+            'Communicate the release to relevant stakeholders',
+            'Confirm post-deployment that the release meets expectations',
+            'Close out the release and feed any deferred items into the backlog for future planning',
+          ]
+        },
+        {
+          name: 'SME',
+          items: [
+            'Be available during and immediately after deployment to support any business-side validation',
+            'Confirm from a business operations perspective that the release is performing as expected',
+            'Log any post-deployment observations through the agreed process for future consideration',
+          ]
+        },
+        {
+          name: 'QR',
+          items: [
+            'Execute the production deployment in accordance with the agreed deployment plan',
+            'Confirm successful deployment across staging and production environments',
+            'Monitor for any post-deployment issues and respond to any incidents within agreed response times',
+            'Provide a deployment summary to the PO on completion',
+            'Transition any outstanding items, known issues, or deferred requirements into the backlog ready for the next planning phase',
+          ]
+        },
+      ]
+    },
+  };
+
   let current = 'planning';
 
   function activate(id) {
@@ -430,7 +651,34 @@
     current = id;
     document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
     document.getElementById('stage-' + id).classList.add('active');
+    renderCallout(id);
+    drawLoops();
   }
+
+  function renderCallout(id) {
+    const data = callouts[id];
+    const callout = document.getElementById('callout');
+    const rolesEl = document.getElementById('callout-roles');
+
+    if (!data) {
+      callout.classList.remove('visible');
+      return;
+    }
+
+    rolesEl.innerHTML = data.roles.map(role => `
+      <div class="role-card">
+        <div class="role-name" style="color:${data.color}">${role.name}</div>
+        <ul class="role-items">
+          ${role.items.map(item => `<li>${item}</li>`).join('')}
+        </ul>
+      </div>
+    `).join('');
+
+    callout.classList.add('visible');
+  }
+
+  // Show planning callout on load
+  window.addEventListener('load', () => { renderCallout('planning'); });
 
   function mk(tag) { return document.createElementNS('http://www.w3.org/2000/svg', tag); }
 
@@ -496,19 +744,19 @@
     const spArc = mk('path');
     spArc.setAttribute('d', `M ${sx} ${sy1} C ${sx+30} ${sy1},${sx+30} ${sy2},${sx} ${sy2}`);
     spArc.setAttribute('fill', 'none');
-    spArc.setAttribute('stroke', 'rgba(22,163,74,.55)');
+    spArc.setAttribute('stroke', current === 'sprint' ? 'rgba(22,163,74,1)' : 'rgba(22,163,74,.55)');
     spArc.setAttribute('stroke-width', '1.5');
     spArc.setAttribute('stroke-dasharray', '5 3');
     spArc.style.animation = 'dash-flow 1.4s linear infinite';
     svg.appendChild(spArc);
 
-    svg.appendChild(arrowPoly(sx, sy1-2, 'up', 'rgba(22,163,74,.7)'));
+    svg.appendChild(arrowPoly(sx, sy1-2, 'up', current === 'sprint' ? 'rgba(22,163,74,1)' : 'rgba(22,163,74,.7)'));
 
     const sl = mk('text');
     const smx = sx + 14, smy = (sy1 + sy2) / 2;
     sl.setAttribute('x', smx); sl.setAttribute('y', smy);
     sl.setAttribute('text-anchor', 'middle'); sl.setAttribute('font-size', '7.5');
-    sl.setAttribute('letter-spacing', '1.8'); sl.setAttribute('fill', 'rgba(22,163,74,.55)');
+    sl.setAttribute('letter-spacing', '1.8'); sl.setAttribute('fill', current === 'sprint' ? 'rgba(22,163,74,1)' : 'rgba(22,163,74,.55)');
     sl.setAttribute('font-family', 'system-ui,sans-serif');
     sl.setAttribute('transform', `rotate(90,${smx},${smy})`);
     sl.textContent = 'SPRINT LOOP';
