@@ -553,21 +553,23 @@
             'Be available to answer clarifying questions from QR during development',
             'Review and approve completed user stories at the end of each sprint demo',
             'Provide timely decisions on any minor ambiguities that surface during development',
-            'Acknowledge that any new or changed requirements raised during this phase will be deferred to a future release, not absorbed into the current one',
+            'Capture any new feature ideas or changed requirements that emerge during the sprint cycle as new user stories, prioritize them in the backlog, and ensure they are considered for a future release',
           ]
         },
         {
           name: 'SME',
           items: [
             'Attend sprint demos when invited to observe progress against the agreed requirements',
-            'Raise any concerns about delivered functionality to the PO, not directly to QR',
-            'Understand that requirements are closed for this release and any new input will be logged for future consideration',
+            'Channel feedback on delivered functionality through the PO, who will coordinate prioritization and share with QR as appropriate',
+            'Participate in sprint demos and provide timely feedback to support the PO in evaluating delivered functionality',
           ]
         },
         {
           name: 'QR',
           items: [
             'Develop user stories in accordance with the approved, baselined requirements',
+            'Develop and unit test each user story to confirm the implementation matches the story definition',
+            'Verify each completed story against its acceptance criteria before presenting at the sprint demo',
             'Conduct QA testing against the agreed acceptance criteria for each story',
             'Raise a formal query to the PO if any requirement is found to be genuinely ambiguous or incomplete during development',
             'Deliver a sprint demo at the end of each two-week sprint to showcase completed stories and gather approval',
@@ -583,8 +585,8 @@
           name: 'Product Owner',
           items: [
             'Own and coordinate the UAT process end to end',
-            'Ensure the right stakeholders and SMEs are engaged for testing',
-            'Consolidate and triage feedback, distinguishing between genuine defects and new requirements',
+            'Ensure the right stakeholders and SMEs are selected to participate in UAT',
+            'Participate in triage calls to assess severity of reported defects and determine whether items represent genuine defects or enhancement requests for future consideration',
             'Make final call on whether defects are release-blocking or can be deferred',
             'Provide formal sign-off that the release is ready for delivery',
           ]
@@ -593,7 +595,7 @@
           name: 'SME',
           items: [
             'Execute UAT test scenarios against the agreed acceptance criteria',
-            'Raise defects and observations through the agreed process, not directly to QR',
+            'Raise defects and observations through the agreed process, with assurance that all feedback will be collected, reviewed, and categorized appropriately',
             'Understand that new requirements or scope changes identified during UAT will be logged for a future release, not incorporated into the current one',
             'Provide timely feedback within the UAT window to avoid delays to delivery',
           ]
@@ -601,7 +603,7 @@
         {
           name: 'QR',
           items: [
-            'Prepare and deploy the release candidate to the UAT environment',
+            'Plan the UAT process including test scenarios, test coverage, and the overall UAT execution plan, then prepare and deploy the release candidate to the UAT environment',
             'Support the PO and SMEs during UAT by answering questions and investigating reported defects',
             'Triage and fix confirmed defects within the agreed UAT window',
             'Distinguish clearly between defects against agreed requirements and requests for new functionality',
