@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agile SDLC</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #ffffff;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px;
+    }
+
+    .diagram {
+      position: relative;
+      width: 100%;
+      max-width: 1060px;
+    }
+
+    .row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    /* ── Arrows between stages ── */
+    .arrow {
+      font-size: 1rem;
+      color: #9ca3af;
+      padding: 0 10px;
+      padding-top: 44px;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    /* ── Stage column ── */
+    .stage {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      filter: grayscale(1) opacity(0.35);
+      transition: filter 0.3s ease;
+      user-select: none;
+    }
+    .stage:hover  { filter: grayscale(0.5) opacity(0.65); }
+    .stage.active { filter: none; }
+
+    /* ── Phase circle ── */
+    .circ {
+      width: 86px; height: 86px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      border: 2px solid transparent;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .stage.active .circ {
+      border-color: rgba(0,0,0,.12);
+      box-shadow: 0 0 28px var(--glow);
+    }
+
+    .lbl {
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      margin-top: 8px;
+    }
+    .sub {
+      font-size: .5rem; letter-spacing: .1em;
+      text-transform: uppercase; opacity: .65;
+      margin-top: 3px; margin-bottom: 12px;
+    }
+
+    /* ── Content card ── */
+    .card {
+      width: 100%;
+      background: #f3f4f8;
+      border: 1px solid #dde1ee;
+      border-radius: 12px;
+      padding: 13px 11px;
+    }
+
+    /* ════════════ PLANNING ════════════ */
+    .st-plan { width: 158px; --glow: rgba(99,102,241,.5); }
+    .st-plan .circ { background: radial-gradient(circle at 36% 32%, #4f46e5, #1e1b4b); }
+    .st-plan .lbl  { color: #4338ca; }
+
+    .feat-grid { display: flex; flex-direction: column; gap: 5px; }
+
+    .sect-lbl {
+      font-size: .47rem; letter-spacing: .14em;
+      text-transform: uppercase; color: rgba(0,0,0,.5);
+      margin-bottom: 1px;
+    }
+
+    .feat-row { display: flex; gap: 5px; }
+
+    .f {
+      width: 16px; height: 16px; border-radius: 3px;
+    }
+    .f.on  { background: #6366f1; box-shadow: 0 0 5px rgba(99,102,241,.45); }
+    .f.off { background: #d1d5e8; border: 1.5px solid #a8afc8; }
+
+    .feat-div {
+      height: 1px; background: rgba(0,0,0,.12);
+      margin: 5px 0;
+    }
+
+    /* ════════════ SPRINT ════════════ */
+    .st-sprint { width: 295px; --glow: rgba(34,197,94,.35); }
+
+    .sprint-head {
+      display: flex; align-items: flex-end;
+      justify-content: center; gap: 14px;
+    }
+
+    .sub-stage {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 5px;
+    }
+
+    .circ-sm {
+      width: 74px; height: 74px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      border: 2px solid transparent;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .st-sprint.active .dev-c { border-color: rgba(34,197,94,.3); box-shadow: 0 0 18px rgba(34,197,94,.35); }
+    .st-sprint.active .qa-c  { border-color: rgba(245,158,11,.3); box-shadow: 0 0 18px rgba(245,158,11,.35); }
+    .dev-c { background: radial-gradient(circle at 36% 32%, #15803d, #052e16); }
+    .qa-c  { background: radial-gradient(circle at 36% 32%, #b45309, #451a03); }
+
+    .swap { font-size: 1rem; color: #9ca3af; padding-bottom: 10px; }
+
+    .dev-lbl { font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #15803d; }
+    .qa-lbl  { font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #b45309; }
+
+    /* Story pool */
+    .story-pool { display: flex; align-items: center; gap: 3px; flex-wrap: wrap; margin-top: 3px; margin-bottom: 2px; }
+    .sg-gap { width: 7px; flex-shrink: 0; }
+    .sdot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .sdot.done { background: #22c55e; }
+    .sdot.prog { background: #f59e0b; }
+    .sdot.fut  { background: #d1d5e8; border: 1px solid #a8afc8; }
+
+    /* Sprint track */
+    .track-hdr {
+      display: flex; align-items: center; gap: 7px;
+      padding: 0 8px; margin-bottom: 3px;
+    }
+    .th-sp { width: 50px; flex-shrink: 0; }
+    .th-col { font-size: .5rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(0,0,0,.45); flex: 1; }
+
+    .s-track { display: flex; flex-direction: column; gap: 5px; }
+
+    .s-row {
+      display: flex; align-items: center; gap: 7px;
+      padding: 5px 8px; border-radius: 7px;
+      background: #eceef5;
+      border: 1px solid #d1d5e8;
+      transition: margin-left 0.2s;
+    }
+    .s-row.live { border-color: rgba(34,197,94,.4); background: rgba(34,197,94,.08); }
+    .s-row.sp1 { margin-left: 0; }
+    .s-row.sp2 { margin-left: 12px; }
+    .s-row.sp3 { margin-left: 24px; }
+
+    .s-id {
+      font-size: .52rem; font-weight: 700; letter-spacing: .04em;
+      color: rgba(0,0,0,.65); width: 50px; flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    /* dev dots | divider | qa dots */
+    .s-dev { display: flex; gap: 3px; }
+    .s-qa  { display: flex; gap: 3px; }
+    .s-sep { width: 1px; height: 14px; background: rgba(0,0,0,.15); margin: 0 3px; flex-shrink: 0; }
+
+    .d { width: 8px; height: 8px; border-radius: 50%; }
+    .d.g { background: #22c55e; }
+    .d.a { background: #f59e0b; }
+    .d.x { background: #d1d5e8; border: 1px solid #a8afc8; }
+
+    .s-ok  { font-size: .72rem; color: #22c55e; margin-left: auto; flex-shrink: 0; }
+    .s-wip { font-size: .72rem; color: #f59e0b; margin-left: auto; flex-shrink: 0; }
+
+    .s-more {
+      text-align: center; font-size: .7rem;
+      color: rgba(0,0,0,.4); letter-spacing: .22em;
+      margin-left: 36px;
+    }
+
+    /* ════════════ UAT ════════════ */
+    .st-uat { width: 158px; --glow: rgba(6,182,212,.5); }
+    .st-uat .circ { background: radial-gradient(circle at 36% 32%, #0891b2, #083344); }
+    .st-uat .lbl  { color: #0e7490; }
+
+    .uat-rows { display: flex; flex-direction: column; gap: 6px; }
+    .uat-row {
+      display: flex; align-items: center; gap: 6px;
+      padding: 5px 7px; border-radius: 7px;
+      background: #eceef5;
+      border: 1px solid #d1d5e8;
+    }
+    .fi {
+      width: 11px; height: 11px; border-radius: 2px;
+      flex-shrink: 0; background: #6366f1;
+    }
+    .fi.dim { opacity: .25; }
+    .uat-bar { flex: 1; height: 5px; border-radius: 3px; background: #d1d5e8; overflow: hidden; }
+    .uat-fill { height: 100%; border-radius: 3px; background: #06b6d4; }
+    .ck { font-size: .65rem; flex-shrink: 0; }
+    .ck.ok { color: #06b6d4; }
+    .ck.w  { color: #f59e0b; }
+    .ck.no { color: rgba(0,0,0,.3); }
+
+    /* ════════════ DELIVERY ════════════ */
+    .st-del { width: 158px; --glow: rgba(236,72,153,.5); }
+    .st-del .circ { background: radial-gradient(circle at 36% 32%, #db2777, #4a044e); }
+    .st-del .lbl  { color: #9d174d; }
+
+    .del-inner {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 14px; padding: 4px 0;
+    }
+    .ver {
+      display: flex; align-items: center; gap: 7px;
+      font-family: monospace; font-size: .75rem;
+    }
+    .v-old { color: rgba(0,0,0,.35); text-decoration: line-through; }
+    .v-arr { color: #db2777; }
+    .v-new { color: #9d174d; font-weight: 700; }
+
+    .envs { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+    .env {
+      display: flex; align-items: center; gap: 6px;
+      font-size: .5rem; letter-spacing: .09em;
+      text-transform: uppercase; color: rgba(0,0,0,.55);
+    }
+    .ed { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .ed.up { background: #22c55e; }
+    .ed.nx { background: #d1d5e8; border: 1px solid #a8afc8; }
+
+    /* ── SVG overlay ── */
+    .loops-svg {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; overflow: visible; z-index: 1;
+    }
+    @keyframes dash-flow { to { stroke-dashoffset: -22; } }
+  </style>
+</head>
+<body>
+<div class="diagram" id="diagram">
+  <div class="row" id="row">
+
+    <!-- ── Planning ── -->
+    <div class="stage st-plan active" id="stage-planning" onclick="activate('planning')">
+      <div class="circ">🗺</div>
+      <div class="lbl">Planning</div>
+      <div class="sub">Release</div>
+      <div class="card">
+        <div class="feat-grid">
+          <div class="sect-lbl">this release</div>
+          <div class="feat-row">
+            <div class="f on"></div><div class="f on"></div><div class="f on"></div>
+          </div>
+          <div class="feat-row">
+            <div class="f on"></div><div class="f off"></div><div class="f off"></div>
+          </div>
+          <div class="feat-div"></div>
+          <div class="sect-lbl">backlog</div>
+          <div class="feat-row">
+            <div class="f off"></div><div class="f off"></div><div class="f off"></div>
+          </div>
+          <div class="feat-row">
+            <div class="f off"></div><div class="f off"></div><div class="f off"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <!-- ── Sprint: Dev + QA ── -->
+    <div class="stage st-sprint" id="stage-sprint" onclick="activate('sprint')">
+      <div class="sprint-head">
+        <div class="sub-stage">
+          <div class="circ-sm dev-c">⚙️</div>
+          <div class="dev-lbl">Dev</div>
+        </div>
+        <div class="swap">⇄</div>
+        <div class="sub-stage">
+          <div class="circ-sm qa-c">🔬</div>
+          <div class="qa-lbl">QA</div>
+        </div>
+      </div>
+      <div class="sub" style="margin-top:8px;">Sprint</div>
+      <div class="card">
+        <!-- Story pool: all stories for this release, grouped by sprint -->
+        <div class="sect-lbl">stories this release</div>
+        <div class="story-pool">
+          <div class="sdot done"></div><div class="sdot done"></div><div class="sdot done"></div><div class="sdot done"></div>
+          <div class="sg-gap"></div>
+          <div class="sdot done"></div><div class="sdot done"></div><div class="sdot done"></div>
+          <div class="sg-gap"></div>
+          <div class="sdot prog"></div><div class="sdot prog"></div><div class="sdot fut"></div><div class="sdot fut"></div>
+          <div class="sg-gap"></div>
+          <div class="sdot fut"></div><div class="sdot fut"></div><div class="sdot fut"></div>
+        </div>
+
+        <div class="feat-div" style="margin:8px 0 6px;"></div>
+
+        <!-- Column headers -->
+        <div class="track-hdr">
+          <div class="th-sp"></div>
+          <div class="th-col">⚙ dev</div>
+          <div class="th-col">🔬 qa</div>
+        </div>
+
+        <div class="s-track">
+          <div class="s-row sp1">
+            <span class="s-id">Sprint 1</span>
+            <div class="s-dev"><div class="d g"></div><div class="d g"></div><div class="d g"></div><div class="d g"></div></div>
+            <div class="s-sep"></div>
+            <div class="s-qa"><div class="d g"></div><div class="d g"></div><div class="d g"></div><div class="d g"></div></div>
+            <span class="s-ok">✓</span>
+          </div>
+
+          <div class="s-row sp2">
+            <span class="s-id">Sprint 2</span>
+            <div class="s-dev"><div class="d g"></div><div class="d g"></div><div class="d g"></div></div>
+            <div class="s-sep"></div>
+            <div class="s-qa"><div class="d g"></div><div class="d g"></div><div class="d g"></div></div>
+            <span class="s-ok">✓</span>
+          </div>
+
+          <div class="s-row sp3 live">
+            <span class="s-id">Sprint 3</span>
+            <div class="s-dev"><div class="d g"></div><div class="d g"></div><div class="d a"></div><div class="d x"></div></div>
+            <div class="s-sep"></div>
+            <div class="s-qa"><div class="d g"></div><div class="d x"></div><div class="d x"></div><div class="d x"></div></div>
+            <span class="s-wip">↺</span>
+          </div>
+
+          <div class="s-more">· · ·</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <!-- ── UAT ── -->
+    <div class="stage st-uat" id="stage-uat" onclick="activate('uat')">
+      <div class="circ">👥</div>
+      <div class="lbl">UAT</div>
+      <div class="sub">Release</div>
+      <div class="card">
+        <div class="uat-rows">
+          <div class="uat-row">
+            <div class="fi"></div>
+            <div class="uat-bar"><div class="uat-fill" style="width:100%"></div></div>
+            <span class="ck ok">✓</span>
+          </div>
+          <div class="uat-row">
+            <div class="fi"></div>
+            <div class="uat-bar"><div class="uat-fill" style="width:100%"></div></div>
+            <span class="ck ok">✓</span>
+          </div>
+          <div class="uat-row">
+            <div class="fi"></div>
+            <div class="uat-bar"><div class="uat-fill" style="width:58%"></div></div>
+            <span class="ck w">△</span>
+          </div>
+          <div class="uat-row">
+            <div class="fi dim"></div>
+            <div class="uat-bar"></div>
+            <span class="ck no">–</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <!-- ── Delivery ── -->
+    <div class="stage st-del" id="stage-delivery" onclick="activate('delivery')">
+      <div class="circ">🚀</div>
+      <div class="lbl">Delivery</div>
+      <div class="sub">Release</div>
+      <div class="card">
+        <div class="del-inner">
+          <div class="ver">
+            <span class="v-old">v2.4</span>
+            <span class="v-arr">→</span>
+            <span class="v-new">v2.5</span>
+          </div>
+          <div class="envs">
+            <div class="env"><div class="ed up"></div>staging</div>
+            <div class="env"><div class="ed up"></div>prod</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /row -->
+
+  <svg class="loops-svg" id="loops-svg"></svg>
+</div>
+
+<script>
+  let current = 'planning';
+
+  function activate(id) {
+    if (current === id) return;
+    current = id;
+    document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+    document.getElementById('stage-' + id).classList.add('active');
+  }
+
+  function mk(tag) { return document.createElementNS('http://www.w3.org/2000/svg', tag); }
+
+  function arrowPoly(x, y, dir, col) {
+    const p = mk('polygon'), s = 5;
+    const pts = {
+      right: `${x-s},${y-s} ${x+s},${y} ${x-s},${y+s}`,
+      left:  `${x+s},${y-s} ${x-s},${y} ${x+s},${y+s}`,
+      up:    `${x-s},${y+s} ${x},${y-s} ${x+s},${y+s}`,
+      down:  `${x-s},${y-s} ${x},${y+s} ${x+s},${y-s}`,
+    };
+    p.setAttribute('points', pts[dir]);
+    p.setAttribute('fill', col);
+    return p;
+  }
+
+  function drawLoops() {
+    const svg = document.getElementById('loops-svg');
+    svg.innerHTML = '';
+    const dRect = document.getElementById('diagram').getBoundingClientRect();
+
+    const L = id => document.getElementById(id).getBoundingClientRect().left  - dRect.left;
+    const R = id => document.getElementById(id).getBoundingClientRect().right - dRect.left;
+    const T = id => document.getElementById(id).getBoundingClientRect().top   - dRect.top;
+    const B = id => document.getElementById(id).getBoundingClientRect().bottom - dRect.top;
+
+    // ── Release cycle oval ──
+    const lx = L('stage-planning') - 12;
+    const rx = R('stage-delivery') + 12;
+    const ty = T('stage-planning') - 22;
+    const by = Math.max(B('stage-planning'), B('stage-sprint'), B('stage-uat'), B('stage-delivery')) + 22;
+    const bul = 32;
+    const mx  = (lx + rx) / 2;
+
+    const oval = mk('path');
+    oval.setAttribute('d', `M ${lx} ${ty} C ${lx} ${ty-bul},${rx} ${ty-bul},${rx} ${ty}
+                             L ${rx} ${by} C ${rx} ${by+bul},${lx} ${by+bul},${lx} ${by} Z`);
+    oval.setAttribute('fill', 'none');
+    oval.setAttribute('stroke', 'rgba(99,102,241,.45)');
+    oval.setAttribute('stroke-width', '1.5');
+    oval.setAttribute('stroke-dasharray', '7 4');
+    svg.appendChild(oval);
+
+    // arrows on oval
+    svg.appendChild(arrowPoly(mx, ty-bul+5, 'right', 'rgba(99,102,241,.6)'));
+    svg.appendChild(arrowPoly(mx, by+bul-5, 'left',  'rgba(99,102,241,.6)'));
+
+    // release cycle label
+    const rl = mk('text');
+    rl.setAttribute('x', mx); rl.setAttribute('y', ty-bul-10);
+    rl.setAttribute('text-anchor', 'middle'); rl.setAttribute('font-size', '8');
+    rl.setAttribute('letter-spacing', '2'); rl.setAttribute('fill', 'rgba(99,102,241,.6)');
+    rl.setAttribute('font-family', 'system-ui,sans-serif');
+    rl.textContent = 'RELEASE CYCLE';
+    svg.appendChild(rl);
+
+    // ── Sprint loop arc (right side, connecting bottom of track back to top) ──
+    const sx  = R('stage-sprint') + 6;
+    const sy1 = T('stage-sprint') + 80;
+    const sy2 = B('stage-sprint') - 10;
+    const spArc = mk('path');
+    spArc.setAttribute('d', `M ${sx} ${sy1} C ${sx+30} ${sy1},${sx+30} ${sy2},${sx} ${sy2}`);
+    spArc.setAttribute('fill', 'none');
+    spArc.setAttribute('stroke', 'rgba(22,163,74,.55)');
+    spArc.setAttribute('stroke-width', '1.5');
+    spArc.setAttribute('stroke-dasharray', '5 3');
+    spArc.style.animation = 'dash-flow 1.4s linear infinite';
+    svg.appendChild(spArc);
+
+    svg.appendChild(arrowPoly(sx, sy1-2, 'up', 'rgba(22,163,74,.7)'));
+
+    const sl = mk('text');
+    const smx = sx + 14, smy = (sy1 + sy2) / 2;
+    sl.setAttribute('x', smx); sl.setAttribute('y', smy);
+    sl.setAttribute('text-anchor', 'middle'); sl.setAttribute('font-size', '7.5');
+    sl.setAttribute('letter-spacing', '1.8'); sl.setAttribute('fill', 'rgba(22,163,74,.55)');
+    sl.setAttribute('font-family', 'system-ui,sans-serif');
+    sl.setAttribute('transform', `rotate(90,${smx},${smy})`);
+    sl.textContent = 'SPRINT LOOP';
+    svg.appendChild(sl);
+  }
+
+  window.addEventListener('load', drawLoops);
+  window.addEventListener('resize', drawLoops);
+</script>
+</body>
+</html>
