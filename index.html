@@ -125,6 +125,18 @@
       letter-spacing: .14em; text-transform: uppercase;
       color: var(--qr-charcoal-30);
       margin-bottom: 1px;
+      display: flex; align-items: center; gap: 4px;
+    }
+
+    .hint-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: clamp(9px, 1vw, 13px); height: clamp(9px, 1vw, 13px);
+      border-radius: 50%; border: 1px solid currentColor;
+      font-size: clamp(5.5px, .6vw, 8px);
+      font-style: normal; font-weight: 700; font-family: var(--qr-font-body);
+      cursor: default; flex-shrink: 0; line-height: 1;
+      user-select: none; letter-spacing: 0; text-transform: none;
+      opacity: .55;
     }
 
     .feat-row { display: flex; gap: clamp(4px, .5vw, 8px); }
@@ -276,7 +288,7 @@
     /* ── Blue/Green deployment slots ── */
     .bgd-envs { display:flex; flex-direction:column; gap:clamp(5px,.7vw,10px); width:100%; }
     .bgd-env  { display:flex; flex-direction:column; gap:clamp(2px,.3vw,4px); }
-    .bgd-lbl  { font-size:clamp(.42rem,.5vw,.7rem); letter-spacing:.14em; text-transform:uppercase; color:var(--qr-charcoal-30); }
+    .bgd-lbl  { font-size:clamp(.42rem,.5vw,.7rem); letter-spacing:.14em; text-transform:uppercase; color:var(--qr-charcoal-30); display:flex; align-items:center; gap:4px; }
     .bgd-slots { display:flex; gap:clamp(4px,.5vw,8px); }
     .bgd-slot {
       flex:1; display:flex; align-items:center; gap:clamp(3px,.4vw,6px);
@@ -474,7 +486,7 @@
       </div>
       <div class="card">
         <div class="feat-grid">
-          <div class="sect-lbl">this release</div>
+          <div class="sect-lbl">this release <span class="hint-icon" data-tip="Release feature — selected for this release and subsequently broken down into user stories for development">i</span></div>
           <div class="feat-row">
             <div class="f off plan-slot" id="ps0" data-tip="Release feature — selected for this release and subsequently broken down into user stories for development"></div>
             <div class="f off plan-slot" id="ps1" data-tip="Release feature — selected for this release and subsequently broken down into user stories for development"></div>
@@ -482,7 +494,7 @@
             <div class="f off plan-slot" id="ps3" data-tip="Release feature — selected for this release and subsequently broken down into user stories for development"></div>
           </div>
           <div class="feat-div"></div>
-          <div class="sect-lbl">backlog</div>
+          <div class="sect-lbl">backlog <span class="hint-icon" data-tip="Backlog item — considered but not selected for this release; prioritised for a future release">i</span></div>
           <div class="feat-row">
             <div class="f off plan-bl" id="pb0" data-tip="Backlog item — considered but not selected for this release; prioritised for a future release"></div>
             <div class="f off plan-bl" id="pb1" data-tip="Backlog item — considered but not selected for this release; prioritised for a future release"></div>
@@ -516,7 +528,7 @@
       </div>
       <div class="card">
         <!-- Story pool: each feature seed above its own story dots -->
-        <div class="sect-lbl">stories this release</div>
+        <div class="sect-lbl">stories this release <span class="hint-icon" data-tip="Sprint — a two-week development cycle composed of stories that will provide new incremental value that will be demoed at sprint close, after which the next sprint is planned and executed">i</span></div>
         <div class="pool-wrapper">
           <div class="feat-col" data-tip="Feature — the box is a release feature; each dot below is a user story derived from it">
             <div class="f on sp-hidden" id="fseed0"></div>
