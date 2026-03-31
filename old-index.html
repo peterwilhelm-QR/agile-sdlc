@@ -5,35 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Agile Release Cycle</title>
   <link rel="icon" type="image/png" href="favicon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --qr-charcoal:    #1E1E1E;
-      --qr-lava:        #FF603A;
-      --qr-sand:        #EAE7E0;
-      --qr-white:       #FFFFFF;
-      --qr-burgundy:    #341B24;
-      --qr-forest:      #183034;
-      --qr-deep-sea:    #181934;
-      --qr-sand-30:     #F4F3EF;
-      --qr-sand-50:     #EDECE4;
-      --qr-charcoal-30: #8F8F8F;
-      --qr-charcoal-50: #535353;
-      --qr-font-headline: 'Poppins', Arial, Helvetica, sans-serif;
-      --qr-font-body:     'Poppins', Arial, Helvetica, sans-serif;
-    }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: var(--qr-sand-30);
-      font-family: var(--qr-font-body);
+      background: #ffffff;
+      font-family: 'Segoe UI', system-ui, sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding: 0 clamp(32px, 4vw, 64px) clamp(48px, 6vw, 80px);
+      padding: clamp(100px, 10vh, 140px) clamp(32px, 4vw, 64px);
     }
 
     .diagram {
@@ -51,7 +34,7 @@
     /* ── Arrows between stages ── */
     .arrow {
       font-size: clamp(.8rem, 1.2vw, 1.4rem);
-      color: var(--qr-charcoal-30);
+      color: #9ca3af;
       padding: 0 clamp(6px, 1vw, 18px);
       padding-top: clamp(24px, 3.2vw, 48px);
       flex-shrink: 0;
@@ -84,46 +67,40 @@
       transition: border-color .3s, box-shadow .3s;
     }
     .stage.active .circ {
-      border-color: rgba(30,30,30,.12);
+      border-color: rgba(0,0,0,.12);
       box-shadow: 0 0 clamp(16px, 2.5vw, 36px) var(--glow);
     }
 
     .lbl {
-      font-family: var(--qr-font-body);
       font-size: clamp(.6rem, .75vw, 1.5rem);
-      font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+      font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
       margin-top: clamp(5px, .8vw, 18px);
-      color: var(--qr-lava);
     }
     .sub {
-      font-family: var(--qr-font-body);
       font-size: clamp(.45rem, .55vw, 1.1rem);
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--qr-charcoal-30);
+      letter-spacing: .1em; text-transform: uppercase; opacity: .65;
       margin-top: 3px; margin-bottom: clamp(8px, 1.2vw, 24px);
     }
 
     /* ── Content card ── */
     .card {
       width: 100%;
-      background: var(--qr-sand);
-      border: 1px solid rgba(30,30,30,.1);
+      background: #f3f4f8;
+      border: 1px solid #dde1ee;
       border-radius: clamp(8px, 1vw, 16px);
       padding: clamp(10px, 1.2vw, 20px) clamp(8px, 1vw, 16px);
     }
 
     /* ════════════ PLANNING ════════════ */
-    .st-plan { flex: 1.05; --glow: rgba(24,25,52,.5); }
-    .st-plan .circ { background: radial-gradient(circle at 36% 32%, #2a2a5a, #181934); } /* Deep Sea */
-    .st-plan .lbl  { color: var(--qr-lava); }
+    .st-plan { flex: 1.05; --glow: rgba(99,102,241,.5); }
+    .st-plan .circ { background: radial-gradient(circle at 36% 32%, #4f46e5, #1e1b4b); }
+    .st-plan .lbl  { color: #4338ca; }
 
     .feat-grid { display: flex; flex-direction: column; gap: clamp(4px, .5vw, 8px); }
 
     .sect-lbl {
-      font-family: var(--qr-font-body);
       font-size: clamp(.42rem, .5vw, .68rem);
-      letter-spacing: .14em; text-transform: uppercase;
-      color: var(--qr-charcoal-30);
+      letter-spacing: .14em; text-transform: uppercase; color: rgba(0,0,0,.5);
       margin-bottom: 1px;
     }
 
@@ -134,16 +111,16 @@
       height: clamp(13px, 1.6vw, 26px);
       border-radius: 3px;
     }
-    .f.on  { background: var(--qr-charcoal); box-shadow: 0 0 5px rgba(30,30,30,.3); }
-    .f.off { background: var(--qr-sand-50); border: 1.5px solid rgba(30,30,30,.18); }
+    .f.on  { background: #6366f1; box-shadow: 0 0 5px rgba(99,102,241,.45); }
+    .f.off { background: #d1d5e8; border: 1.5px solid #a8afc8; }
 
     .feat-div {
-      height: 1px; background: rgba(30,30,30,.1);
+      height: 1px; background: rgba(0,0,0,.12);
       margin: clamp(3px, .5vw, 7px) 0;
     }
 
     /* ════════════ SPRINT ════════════ */
-    .st-sprint { flex: 2; --glow: rgba(24,49,52,.45); }
+    .st-sprint { flex: 2; --glow: rgba(34,197,94,.35); }
 
     .sprint-head {
       display: flex; align-items: flex-end;
@@ -164,15 +141,15 @@
       border: 2px solid transparent;
       transition: border-color .3s, box-shadow .3s;
     }
-    .st-sprint.active .dev-c { border-color: rgba(24,48,52,.35); box-shadow: 0 0 18px rgba(24,48,52,.4); }
-    .st-sprint.active .qa-c  { border-color: rgba(52,27,36,.35); box-shadow: 0 0 18px rgba(52,27,36,.4); }
-    .dev-c { background: radial-gradient(circle at 36% 32%, #265a5f, #183034); } /* Forest */
-    .qa-c  { background: radial-gradient(circle at 36% 32%, #5a2f3e, #341B24); } /* Burgundy */
+    .st-sprint.active .dev-c { border-color: rgba(34,197,94,.3); box-shadow: 0 0 18px rgba(34,197,94,.35); }
+    .st-sprint.active .qa-c  { border-color: rgba(245,158,11,.3); box-shadow: 0 0 18px rgba(245,158,11,.35); }
+    .dev-c { background: radial-gradient(circle at 36% 32%, #15803d, #052e16); }
+    .qa-c  { background: radial-gradient(circle at 36% 32%, #b45309, #451a03); }
 
-    .swap { font-size: clamp(.9rem, 1.4vw, 1.8rem); color: var(--qr-charcoal-30); padding-bottom: clamp(6px, 1vw, 14px); }
+    .swap { font-size: clamp(.9rem, 1.4vw, 1.8rem); color: #9ca3af; padding-bottom: clamp(6px, 1vw, 14px); }
 
-    .dev-lbl { font-size: clamp(.6rem, .75vw, 1.5rem); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #183034; }
-    .qa-lbl  { font-size: clamp(.6rem, .75vw, 1.5rem); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #341B24; }
+    .dev-lbl { font-size: clamp(.6rem, .75vw, 1.5rem); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #15803d; }
+    .qa-lbl  { font-size: clamp(.6rem, .75vw, 1.5rem); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #b45309; }
 
     /* Story pool */
     .sp-hidden { opacity: 0; }
@@ -183,7 +160,7 @@
     .sdot { width: clamp(8px, 1vw, 16px); height: clamp(8px, 1vw, 16px); border-radius: 50%; flex-shrink: 0; }
     .sdot.done { background: #22c55e; }
     .sdot.prog { background: #f59e0b; }
-    .sdot.fut  { background: var(--qr-sand-50); border: 1px solid rgba(30,30,30,.18); }
+    .sdot.fut  { background: #d1d5e8; border: 1px solid #a8afc8; }
 
     /* Sprint track */
     .track-hdr {
@@ -191,7 +168,7 @@
       padding: 0 clamp(5px, .7vw, 12px); margin-bottom: clamp(2px, .4vw, 6px);
     }
     .th-sp { width: clamp(44px, 5.5vw, 88px); flex-shrink: 0; }
-    .th-col { font-size: clamp(.45rem, .52vw, .72rem); letter-spacing: .08em; text-transform: uppercase; color: var(--qr-charcoal-30); flex: 1; }
+    .th-col { font-size: clamp(.45rem, .52vw, .72rem); letter-spacing: .08em; text-transform: uppercase; color: rgba(0,0,0,.45); flex: 1; }
 
     .s-track { display: flex; flex-direction: column; gap: clamp(4px, .5vw, 8px); }
 
@@ -199,67 +176,67 @@
       display: flex; align-items: center; gap: clamp(4px, .6vw, 10px);
       padding: clamp(4px, .5vw, 8px) clamp(5px, .7vw, 12px);
       border-radius: clamp(5px, .6vw, 10px);
-      background: var(--qr-sand-30); border: 1px solid rgba(30,30,30,.1);
+      background: #eceef5; border: 1px solid #d1d5e8;
       transition: margin-left 0.2s;
     }
-    .s-row.live { border-color: rgba(255,96,58,.35); background: rgba(255,96,58,.06); }
+    .s-row.live { border-color: rgba(34,197,94,.4); background: rgba(34,197,94,.08); }
     .s-row.sp1 { margin-left: 0; }
     .s-row.sp2 { margin-left: clamp(10px, 1.2vw, 22px); }
     .s-row.sp3 { margin-left: clamp(20px, 2.4vw, 44px); }
 
     .s-id {
       font-size: clamp(.48rem, .56vw, .78rem); font-weight: 700; letter-spacing: .04em;
-      color: var(--qr-charcoal-50); width: clamp(44px, 5.5vw, 88px); flex-shrink: 0;
+      color: rgba(0,0,0,.65); width: clamp(44px, 5.5vw, 88px); flex-shrink: 0;
       white-space: nowrap;
     }
 
     /* dev dots | divider | qa dots */
     .s-dev { display: flex; gap: clamp(2px, .3vw, 5px); }
     .s-qa  { display: flex; gap: clamp(2px, .3vw, 5px); }
-    .s-sep { width: 1px; height: clamp(10px, 1.2vw, 20px); background: rgba(30,30,30,.12); margin: 0 clamp(2px, .4vw, 6px); flex-shrink: 0; }
+    .s-sep { width: 1px; height: clamp(10px, 1.2vw, 20px); background: rgba(0,0,0,.15); margin: 0 clamp(2px, .4vw, 6px); flex-shrink: 0; }
 
     .d { width: clamp(7px, .9vw, 14px); height: clamp(7px, .9vw, 14px); border-radius: 50%; }
     .d.g { background: #22c55e; }
     .d.a { background: #f59e0b; }
-    .d.x { background: var(--qr-sand-50); border: 1px solid rgba(30,30,30,.18); }
+    .d.x { background: #d1d5e8; border: 1px solid #a8afc8; }
 
     .s-ok  { font-size: clamp(.65rem, .8vw, 1.1rem); color: #22c55e; margin-left: auto; flex-shrink: 0; }
-    .s-wip { font-size: clamp(.65rem, .8vw, 1.1rem); color: var(--qr-lava); margin-left: auto; flex-shrink: 0; }
+    .s-wip { font-size: clamp(.65rem, .8vw, 1.1rem); color: #22c55e; margin-left: auto; flex-shrink: 0; }
 
     .s-more {
       text-align: center; font-size: clamp(.6rem, .75vw, 1rem);
-      color: var(--qr-charcoal-30); letter-spacing: .22em;
+      color: rgba(0,0,0,.4); letter-spacing: .22em;
       margin-left: clamp(20px, 2.5vw, 44px);
     }
 
     /* ════════════ UAT ════════════ */
-    .st-uat { flex: 1.05; --glow: rgba(30,30,30,.45); }
-    .st-uat .circ { background: radial-gradient(circle at 36% 32%, #3a3a3a, #1E1E1E); } /* Charcoal */
-    .st-uat .lbl  { color: var(--qr-lava); }
+    .st-uat { flex: 1.05; --glow: rgba(6,182,212,.5); }
+    .st-uat .circ { background: radial-gradient(circle at 36% 32%, #0891b2, #083344); }
+    .st-uat .lbl  { color: #0e7490; }
 
     .uat-rows { display: flex; flex-direction: column; gap: clamp(4px, .6vw, 10px); }
     .uat-row {
       display: flex; align-items: center; gap: clamp(4px, .6vw, 10px);
       padding: clamp(4px, .5vw, 8px) clamp(5px, .7vw, 12px);
       border-radius: clamp(5px, .6vw, 10px);
-      background: var(--qr-sand-30); border: 1px solid rgba(30,30,30,.1);
+      background: #eceef5; border: 1px solid #d1d5e8;
     }
     .fi {
       width: clamp(9px, 1.1vw, 18px); height: clamp(9px, 1.1vw, 18px);
-      border-radius: 2px; flex-shrink: 0; background: var(--qr-charcoal);
+      border-radius: 2px; flex-shrink: 0; background: #6366f1;
     }
-    .fi.dim { opacity: .2; }
-    .uat-bar { flex: 1; height: clamp(4px, .5vw, 8px); border-radius: 3px; background: rgba(30,30,30,.1); overflow: hidden; }
-    .uat-fill { height: 100%; border-radius: 3px; background: var(--qr-lava); transition: width 1.1s ease-in-out; }
+    .fi.dim { opacity: .25; }
+    .uat-bar { flex: 1; height: clamp(4px, .5vw, 8px); border-radius: 3px; background: #d1d5e8; overflow: hidden; }
+    .uat-fill { height: 100%; border-radius: 3px; background: #06b6d4; transition: width 1.1s ease-in-out; }
     .ck { font-size: clamp(.6rem, .75vw, 1rem); flex-shrink: 0; }
-    .ck.ok { color: var(--qr-lava); }
+    .ck.ok { color: #06b6d4; }
     .ck.w  { color: #f59e0b; }
-    .ck.no { color: rgba(30,30,30,.25); }
+    .ck.no { color: rgba(0,0,0,.3); }
 
     /* ════════════ DELIVERY ════════════ */
-    .st-del { flex: 1.05; --glow: rgba(255,96,58,.45); }
-    .st-del .circ { background: radial-gradient(circle at 36% 32%, #FF603A, #341B24); } /* Lava → Burgundy */
-    .st-del .lbl  { color: var(--qr-lava); }
+    .st-del { flex: 1.05; --glow: rgba(236,72,153,.5); }
+    .st-del .circ { background: radial-gradient(circle at 36% 32%, #db2777, #4a044e); }
+    .st-del .lbl  { color: #9d174d; }
 
     .del-inner {
       display: flex; flex-direction: column;
@@ -269,21 +246,21 @@
       display: flex; align-items: center; gap: clamp(5px, .7vw, 12px);
       font-family: monospace; font-size: clamp(.65rem, .85vw, 1.2rem);
     }
-    .v-old { color: var(--qr-charcoal-30); text-decoration: line-through; }
-    .v-arr { color: var(--qr-lava); }
-    .v-new { color: var(--qr-lava); font-weight: 700; }
+    .v-old { color: rgba(0,0,0,.35); text-decoration: line-through; }
+    .v-arr { color: #db2777; }
+    .v-new { color: #9d174d; font-weight: 700; }
 
     /* ── Blue/Green deployment slots ── */
     .bgd-envs { display:flex; flex-direction:column; gap:clamp(5px,.7vw,10px); width:100%; }
     .bgd-env  { display:flex; flex-direction:column; gap:clamp(2px,.3vw,4px); }
-    .bgd-lbl  { font-size:clamp(.42rem,.5vw,.7rem); letter-spacing:.14em; text-transform:uppercase; color:var(--qr-charcoal-30); }
+    .bgd-lbl  { font-size:clamp(.42rem,.5vw,.7rem); letter-spacing:.14em; text-transform:uppercase; color:rgba(0,0,0,.5); }
     .bgd-slots { display:flex; gap:clamp(4px,.5vw,8px); }
     .bgd-slot {
       flex:1; display:flex; align-items:center; gap:clamp(3px,.4vw,6px);
       padding:clamp(3px,.4vw,6px) clamp(4px,.55vw,8px);
-      border-radius:clamp(4px,.5vw,8px); border:1.5px solid rgba(30,30,30,.15);
+      border-radius:clamp(4px,.5vw,8px); border:1.5px solid rgba(0,0,0,.15);
       font-family:monospace; font-size:clamp(.5rem,.62vw,.9rem); font-weight:600;
-      color:var(--qr-charcoal-50); transition:filter .5s ease, border-color .3s ease;
+      color:rgba(0,0,0,.7); transition:filter .5s ease, border-color .3s ease;
       position:relative; overflow:visible;
     }
     .bgd-slot.inactive        { filter:saturate(0.12) opacity(0.4); }
@@ -299,11 +276,10 @@
     /* ── Hover tooltip ── */
     #tip {
       position:fixed; display:none; pointer-events:none; z-index:9999;
-      background:rgba(30,30,30,.95); color:var(--qr-sand);
-      font-family:var(--qr-font-body);
-      font-size:clamp(.6rem,.68vw,.8rem); line-height:1.5;
+      background:rgba(15,23,42,.93); color:#f1f5f9;
+      font-size:clamp(.6rem,.68vw,.8rem); line-height:1.45;
       padding:6px 11px; border-radius:7px; max-width:230px;
-      box-shadow:0 3px 12px rgba(0,0,0,.25);
+      box-shadow:0 3px 12px rgba(0,0,0,.35);
     }
     [data-tip] { cursor:default; }
 
@@ -330,20 +306,20 @@
 
     .role-card {
       flex: 1;
-      background: var(--qr-sand);
-      border: 1px solid rgba(30,30,30,.1);
+      background: #f3f4f8;
+      border: 1px solid #dde1ee;
       border-radius: clamp(8px, 1vw, 16px);
       padding: clamp(14px, 1.5vw, 28px);
     }
 
     .role-name {
-      font-family: var(--qr-font-headline);
-      font-size: clamp(.85rem, 1vw, 1.4rem);
-      font-weight: 400;
-      letter-spacing: .02em;
+      font-size: clamp(.65rem, .8vw, 1.1rem);
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
       margin-bottom: clamp(10px, 1vw, 18px);
       padding-bottom: clamp(8px, .8vw, 14px);
-      border-bottom: 1px solid rgba(30,30,30,.1);
+      border-bottom: 1px solid #dde1ee;
     }
 
     .role-items {
@@ -355,8 +331,8 @@
 
     .role-items li {
       font-size: clamp(.6rem, .72vw, 1rem);
-      color: var(--qr-charcoal-50);
-      line-height: 1.6;
+      color: rgba(0,0,0,.7);
+      line-height: 1.5;
       padding-left: clamp(10px, 1vw, 16px);
       position: relative;
     }
@@ -365,7 +341,7 @@
       content: '–';
       position: absolute;
       left: 0;
-      color: var(--qr-lava);
+      color: rgba(0,0,0,.3);
     }
 
     /* ── Stage header normalisation ── */
@@ -376,21 +352,6 @@
       justify-content: flex-end;
       min-height: clamp(90px, 10vw, 180px);
       width: 100%;
-    }
-
-    /* ── SVG overlay ── */
-    /* ── Logo header ── */
-    .qr-header {
-      width: 100%;
-      max-width: 94vw;
-      padding: clamp(18px, 2.2vw, 26px) 0 clamp(16px, 2vw, 22px);
-      border-bottom: 1px solid rgba(30,30,30,.1);
-      margin-bottom: clamp(28px, 3.5vw, 52px);
-    }
-    .qr-logo {
-      height: clamp(24px, 2.6vw, 36px);
-      width: auto;
-      display: block;
     }
 
     /* ── SVG overlay ── */
@@ -437,31 +398,6 @@
   </style>
 </head>
 <body>
-<header class="qr-header">
-  <svg class="qr-logo" viewBox="0 0 194 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="QuantumRise">
-    <g clip-path="url(#qr-logo-clip)">
-      <path d="M53.1127 20.2096L52.7217 19.7327C52.299 19.1498 51.9185 18.8955 51.3373 18.8955H49.7944V16.3733H51.6649C52.8908 16.3733 53.5037 16.723 54.1483 17.6026L54.6661 18.2808C55.1417 17.3165 55.4058 16.1825 55.4058 14.9214C55.4058 13.0456 54.888 11.5302 53.863 10.3326C52.8379 9.13512 51.517 8.55225 49.8684 8.55225C48.2199 8.55225 46.8778 9.13512 45.8527 10.3326C44.8277 11.5302 44.3099 13.0456 44.3099 14.9214C44.3099 16.7972 44.8277 18.3126 45.8527 19.5102C46.8778 20.7077 48.1987 21.3223 49.8684 21.3223C51.0943 21.3223 52.1827 20.9726 53.1232 20.2202L53.1127 20.2096ZM59.2207 21.121V23.675H57.5194C56.843 23.675 56.2935 23.5796 55.9131 23.4207C55.5221 23.2299 55.1734 22.9014 54.8458 22.4775L54.7507 22.3503C53.3663 23.3571 51.7283 23.834 49.8262 23.834C48.1776 23.834 46.7404 23.4419 45.4195 22.6682C44.1302 21.8946 43.1369 20.856 42.4288 19.4996C41.7208 18.1431 41.3721 16.6276 41.3721 14.9108C41.3721 13.194 41.7208 11.7103 42.4288 10.3538C43.1369 8.99735 44.1408 7.93759 45.4195 7.16396C46.7404 6.39034 48.1882 5.99823 49.8262 5.99823C51.4641 5.99823 52.9436 6.39034 54.2328 7.16396C55.5538 7.93759 56.5154 8.99735 57.2657 10.3538C57.9738 11.7103 58.3225 13.2258 58.3225 14.9108C58.3225 17.1681 57.7096 19.1074 56.4943 20.6547C56.8113 20.9514 57.234 21.1104 57.6779 21.1104H59.2207V21.121Z" fill="#FF603A"/>
-      <path d="M69.8201 10.8837H72.5254V23.675H70.1477L69.8306 22.0642C68.869 23.2617 67.548 23.834 65.8995 23.834C64.4834 23.834 63.321 23.4418 62.391 22.5728C61.4294 21.7038 60.8799 20.1142 60.8799 18.0159V10.8731H63.5535V17.6874C63.5535 20.2096 64.5574 21.4707 66.5441 21.4707C68.5308 21.4707 69.8306 19.9234 69.8306 17.274V10.8731L69.8201 10.8837Z" fill="#FF603A"/>
-      <path d="M81.011 21.5661C82.11 21.5661 83.0083 21.1528 83.7163 20.3686C84.3926 19.5949 84.7097 18.5564 84.7097 17.3377C84.7097 16.1189 84.3926 15.0168 83.7163 14.2432C83.0083 13.4377 82.0995 13.0138 81.011 13.0138C79.9225 13.0138 79.0137 13.4271 78.3057 14.2114C77.6294 14.985 77.3123 16.0236 77.3123 17.2847C77.3123 18.5458 77.6294 19.5737 78.3057 20.3792C79.0137 21.1528 79.912 21.5767 81.011 21.5767V21.5661ZM85.0795 10.8837H87.3938V23.675H85.0373L84.7202 21.7357C83.7269 23.1239 82.3425 23.834 80.5672 23.834C78.7918 23.834 77.344 23.2511 76.2239 22.0642C75.0931 20.8984 74.5542 19.3194 74.5542 17.2847C74.5542 15.2499 75.1354 13.7663 76.2556 12.5369C77.3863 11.3394 78.8341 10.7248 80.5672 10.7248C82.3002 10.7248 83.7586 11.403 84.7202 12.7595L85.0795 10.8837Z" fill="#FF603A"/>
-      <path d="M101.84 16.564V23.6644H99.1344V16.7866C99.1344 14.3279 98.1094 13.0456 96.0699 13.0456C93.9141 13.0456 92.6565 14.6247 92.6565 17.2423V23.675H89.9829V10.8837H92.2972L92.6142 12.5687C93.5759 11.3394 94.9708 10.7248 96.7039 10.7248C99.5043 10.7248 101.819 12.272 101.819 16.5322V16.564H101.84Z" fill="#FF603A"/>
-      <path d="M105.095 13.2364H102.875V10.8731H105.095V7.29114H107.8V10.8731H110.928V13.2364H107.8V19.9235C107.8 20.9514 108.159 21.3117 109.184 21.3117H111.087V23.675H108.571C106.151 23.675 105.095 22.5411 105.095 20.2202V13.247V13.2364Z" fill="#FF603A"/>
-      <path d="M121.739 10.8837H124.444V23.675H122.088L121.771 22.0642C120.809 23.2617 119.488 23.834 117.839 23.834C116.423 23.834 115.261 23.4418 114.299 22.5728C113.338 21.7038 112.788 20.1142 112.788 18.0159V10.8731H115.493V17.6874C115.493 20.2096 116.497 21.4707 118.452 21.4707C120.407 21.4707 121.739 19.9234 121.739 17.274V10.8731V10.8837Z" fill="#FF603A"/>
-      <path d="M146.298 16.3097V23.675H143.593V16.4687C143.593 14.2432 142.694 13.0456 140.951 13.0456C140.01 13.0456 139.281 13.3636 138.731 14.0524C138.182 14.6989 137.928 15.5997 137.928 16.7654V23.675H135.191V16.4687C135.191 14.2432 134.251 13.0456 132.486 13.0456C131.588 13.0456 130.837 13.406 130.33 14.0736C129.781 14.7519 129.527 15.6844 129.527 16.8184V23.6644H126.822V10.8731H129.168L129.464 12.5582C130.394 11.3288 131.619 10.7142 133.194 10.7142C134.969 10.7142 136.417 11.456 137.157 13.035C137.992 11.5832 139.471 10.7142 141.5 10.7142C144.142 10.7142 146.298 12.2296 146.298 16.2991V16.3097Z" fill="#FF603A"/>
-      <path d="M151.74 8.65822V14.826H155.502C156.527 14.826 157.373 14.5293 157.943 13.9888C158.556 13.4377 158.884 12.6959 158.884 11.7633C158.884 10.8307 158.567 10.0889 157.943 9.50603C157.362 8.95495 156.527 8.66882 155.502 8.66882H151.74V8.65822ZM148.845 23.675V6.16779H155.735C157.563 6.16779 159.042 6.65527 160.173 7.68324C161.272 8.67941 161.822 10.0359 161.822 11.7527C161.822 12.9184 161.526 13.9464 160.923 14.826C160.311 15.7268 159.476 16.3415 158.44 16.7018L162.139 23.675H158.916L155.566 17.3482H151.74V23.675H148.845Z" fill="#FF603A"/>
-      <path d="M163.935 10.8837H166.641V23.675H163.935V10.8837ZM165.32 9.07153C164.844 9.07153 164.453 8.91257 164.136 8.61583C163.819 8.29791 163.682 7.90579 163.682 7.4501C163.682 6.97321 163.808 6.5811 164.136 6.25257C164.453 5.95584 164.844 5.79688 165.32 5.79688C165.774 5.79688 166.154 5.95584 166.482 6.25257C166.799 6.5705 166.968 6.96261 166.968 7.4501C166.968 7.90579 166.81 8.28731 166.482 8.61583C166.165 8.91257 165.774 9.07153 165.32 9.07153Z" fill="#FF603A"/>
-      <path d="M171.407 19.4678C171.502 20.8243 172.696 21.7251 174.598 21.7251C176.268 21.7251 177.367 21.0786 177.367 20.0506C177.367 19.5314 177.113 19.1498 176.881 18.9485C176.754 18.8213 176.532 18.7577 176.236 18.6518C175.919 18.5564 175.655 18.5246 175.433 18.4928C175.243 18.461 174.883 18.3974 174.408 18.3338H174.217C172.928 18.1749 172.093 18.0159 171.121 17.6556C170.667 17.4648 170.286 17.2635 170.001 17.0091C169.42 16.5216 168.997 15.7162 168.997 14.6883C168.997 13.4907 169.483 12.5264 170.477 11.7739C171.438 11.0639 172.696 10.7142 174.249 10.7142C175.803 10.7142 177.145 11.0639 178.149 11.7739C179.174 12.5158 179.692 13.5225 179.787 14.7836H177.145C177.081 14.2008 176.796 13.7239 176.246 13.3318C175.729 12.9715 175.084 12.7807 174.281 12.7807C172.664 12.7807 171.639 13.4272 171.639 14.4551C171.639 15.0698 171.998 15.3983 172.474 15.6209C172.77 15.748 173.435 15.854 173.827 15.9176C174.048 15.9494 174.344 15.9812 174.725 16.013C175.369 16.1083 175.908 16.2037 176.394 16.2673C176.849 16.3627 177.324 16.5005 177.81 16.6912C178.286 16.882 178.677 17.1045 178.994 17.3695C179.575 17.8887 179.998 18.7259 179.998 19.8281C179.998 21.0574 179.48 22.0218 178.487 22.7318C177.462 23.4737 176.173 23.834 174.598 23.834C172.854 23.834 171.438 23.4419 170.381 22.6682C169.314 21.8946 168.775 20.8349 168.733 19.4784H171.407V19.4678Z" fill="#FF603A"/>
-      <path d="M191.168 15.8858C190.978 13.9782 189.689 12.8867 187.786 12.8867C186.888 12.8867 186.138 13.1728 185.504 13.7239C184.859 14.275 184.479 14.985 184.384 15.8858H191.21H191.179H191.168ZM183.211 22.0536C182.048 20.8561 181.478 19.277 181.478 17.3059C181.478 15.3347 182.027 13.7239 183.179 12.5264C184.341 11.3288 185.853 10.7142 187.755 10.7142C189.657 10.7142 191.105 11.2652 192.225 12.3674C193.356 13.4695 193.937 14.9532 194 16.8184C194 17.1363 193.968 17.4966 193.905 17.8569H184.278V18.0159C184.31 19.1181 184.669 19.9871 185.303 20.6335C185.948 21.3118 186.782 21.6297 187.85 21.6297C189.498 21.6297 190.682 20.7925 191.073 19.3724H193.747C193.514 20.6971 192.88 21.7569 191.844 22.5729C190.819 23.4101 189.53 23.834 187.987 23.834C185.99 23.834 184.415 23.2193 183.221 22.0642L183.211 22.0536Z" fill="#FF603A"/>
-      <path d="M29.5469 31.6444H14.7734V36H29.5469V31.6444Z" fill="#FF603A"/>
-      <path d="M25.172 25.254H4.37499V4.3874H25.172V25.2434V25.254ZM14.7735 0C6.60475 0 0 6.65528 0 14.826C0 22.9968 6.60475 29.652 14.7735 29.652C22.9423 29.652 29.547 23.0286 29.547 14.826C29.547 6.62349 22.9211 0 14.7735 0Z" fill="#FF603A"/>
-    </g>
-    <defs>
-      <clipPath id="qr-logo-clip">
-        <rect width="194" height="36" fill="white"/>
-      </clipPath>
-    </defs>
-  </svg>
-</header>
-
 <div class="diagram" id="diagram">
   <div class="row" id="row">
 
@@ -605,22 +541,22 @@
           <div class="uat-row" id="ur0" data-tip="UAT test scenario — client SMEs validate that feature requirements were met, identifying any defects for resolution or enhancements for future consideration">
             <div class="fi dim" id="ufi0"></div>
             <div class="uat-bar"><div class="uat-fill" id="uf0" style="width:0;transition:none"></div></div>
-            <span class="ck" id="uck0" style="color:rgba(30,30,30,.25)">–</span>
+            <span class="ck" id="uck0" style="color:rgba(0,0,0,.3)">–</span>
           </div>
           <div class="uat-row" id="ur1" data-tip="UAT test scenario — client SMEs validate that feature requirements were met, identifying any defects for resolution or enhancements for future consideration">
             <div class="fi dim" id="ufi1"></div>
             <div class="uat-bar"><div class="uat-fill" id="uf1" style="width:0;transition:none"></div></div>
-            <span class="ck" id="uck1" style="color:rgba(30,30,30,.25)">–</span>
+            <span class="ck" id="uck1" style="color:rgba(0,0,0,.3)">–</span>
           </div>
           <div class="uat-row" id="ur2" data-tip="UAT test scenario — client SMEs validate that feature requirements were met, identifying any defects for resolution or enhancements for future consideration">
             <div class="fi dim" id="ufi2"></div>
             <div class="uat-bar"><div class="uat-fill" id="uf2" style="width:0;transition:none"></div></div>
-            <span class="ck" id="uck2" style="color:rgba(30,30,30,.25)">–</span>
+            <span class="ck" id="uck2" style="color:rgba(0,0,0,.3)">–</span>
           </div>
           <div class="uat-row" id="ur3" data-tip="UAT test scenario — client SMEs validate that feature requirements were met, identifying any defects for resolution or enhancements for future consideration">
             <div class="fi dim" id="ufi3"></div>
             <div class="uat-bar"><div class="uat-fill" id="uf3" style="width:0;transition:none"></div></div>
-            <span class="ck" id="uck3" style="color:rgba(30,30,30,.25)">–</span>
+            <span class="ck" id="uck3" style="color:rgba(0,0,0,.3)">–</span>
           </div>
         </div>
       </div>
@@ -675,7 +611,7 @@
 <script>
   const callouts = {
     planning: {
-      color: '#181934',
+      color: '#4338ca',
       roles: [
         {
           name: 'Product Owner',
@@ -710,7 +646,7 @@
       ]
     },
     sprint: {
-      color: '#183134',
+      color: '#15803d',
       roles: [
         {
           name: 'Product Owner',
@@ -744,7 +680,7 @@
       ]
     },
     uat: {
-      color: '#183134',
+      color: '#0e7490',
       roles: [
         {
           name: 'Product Owner',
@@ -778,7 +714,7 @@
       ]
     },
     delivery: {
-      color: '#351B25',
+      color: '#9d174d',
       roles: [
         {
           name: 'Product Owner',
@@ -926,23 +862,23 @@
     oval.setAttribute('d', `M ${lx} ${ty} C ${lx} ${ty-bul},${rx} ${ty-bul},${rx} ${ty}
                              L ${rx} ${by} C ${rx} ${by+bul},${lx} ${by+bul},${lx} ${by} Z`);
     oval.setAttribute('fill', 'none');
-    oval.setAttribute('stroke', 'rgba(255,96,58,.35)');
+    oval.setAttribute('stroke', 'rgba(99,102,241,.45)');
     oval.setAttribute('stroke-width', '1.5');
     oval.setAttribute('stroke-dasharray', '7 4');
     svg.appendChild(oval);
 
     // arrows on oval
-    svg.appendChild(arrowPoly(mx, ty-bul+5, 'right', 'rgba(255,96,58,.55)'));
-    svg.appendChild(arrowPoly(mx, by+bul-5, 'left',  'rgba(255,96,58,.55)'));
+    svg.appendChild(arrowPoly(mx, ty-bul+5, 'right', 'rgba(99,102,241,.6)'));
+    svg.appendChild(arrowPoly(mx, by+bul-5, 'left',  'rgba(99,102,241,.6)'));
 
     // release cycle label
     const labelSize = Math.round(Math.min(Math.max(12, window.innerWidth * 0.009), 26));
     const rl = mk('text');
     rl.setAttribute('x', mx); rl.setAttribute('y', ty-bul-10);
     rl.setAttribute('text-anchor', 'middle'); rl.setAttribute('font-size', labelSize);
-    rl.setAttribute('font-weight', '600'); rl.setAttribute('letter-spacing', '2');
-    rl.setAttribute('fill', '#FF603A');
-    rl.setAttribute('font-family', "'Poppins', sans-serif");
+    rl.setAttribute('font-weight', '700'); rl.setAttribute('letter-spacing', '2');
+    rl.setAttribute('fill', '#4338ca');
+    rl.setAttribute('font-family', 'system-ui,sans-serif');
     rl.textContent = 'RELEASE CYCLE';
     svg.appendChild(rl);
 
@@ -1198,7 +1134,7 @@
       const uck = document.getElementById(`uck${i}`);
       if (fi)  fi.classList.remove('dim');
       if (uf)  { uf.style.transition = 'none'; uf.style.width = '100%'; }
-      if (uck) { uck.textContent = '✓'; uck.style.color = '#FF603A'; }
+      if (uck) { uck.textContent = '✓'; uck.style.color = '#22c55e'; }
     });
   }
 
@@ -1209,7 +1145,7 @@
       const uck = document.getElementById(`uck${i}`);
       if (fi)  fi.classList.add('dim');
       if (uf)  { uf.style.transition = 'none'; uf.style.width = '0'; }
-      if (uck) { uck.textContent = '–'; uck.style.color = 'rgba(30,30,30,.25)'; }
+      if (uck) { uck.textContent = '–'; uck.style.color = 'rgba(0,0,0,.3)'; }
     });
   }
 
@@ -1227,7 +1163,7 @@
     const uf  = document.getElementById(`uf${i}`);
     const uck = document.getElementById(`uck${i}`);
     if (fi)  fi.classList.remove('dim');
-    if (uck) { uck.textContent = '⏱'; uck.style.color = '#FF603A'; }
+    if (uck) { uck.textContent = '⏱'; uck.style.color = '#06b6d4'; }
     // Double rAF ensures browser processes transition:none before enabling the transition
     if (uf) requestAnimationFrame(() => requestAnimationFrame(() => {
       if (!uatActive) return;
@@ -1236,7 +1172,7 @@
     }));
     uatTimer = setTimeout(() => {
       if (!uatActive) return;
-      if (uck) { uck.textContent = '✓'; uck.style.color = '#FF603A'; }
+      if (uck) { uck.textContent = '✓'; uck.style.color = '#22c55e'; }
       uatTimer = setTimeout(() => uatAnimRow(i + 1), ROW_GAP);
     }, FILL_DUR + 180);
   }
